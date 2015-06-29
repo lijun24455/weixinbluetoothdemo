@@ -1,0 +1,168 @@
+package proto;
+
+
+enum EmCmdId{
+
+    ECI_none = 0;
+
+    ECI_req_auth = 10001;
+    ECI_req_sendData = 10002;
+    ECI_req_init = 10003;
+
+    ECI_resp_auth = 20001;
+    ECI_resp_sendDate = 20002;
+    ECI_resp_init = 20003;
+
+    ECI_push_recvData = 30001;
+    ECI_push_switchView = 30002;
+    ECI_push_switchBackground = 30003;
+
+    ECI_err_decode = 29999;
+}
+
+enum EmErrorCode{
+    EEC_system = -1;
+    EEC_needAuth = -2;
+    EEC_sessionTimeout = -3;
+    EEC_decode = -4;
+    EEC_deviceIsBlock = -5;
+    EEC_serviceUnAvalibleInBackground = -6;
+    EEC_deviceProtoVersionNeedUpdate = -7;
+    EEC_phoneProtoVersionNeedUpdate = -8;
+    EEC_maxReqInQueue = -9;
+    EEC_userExitWxAccount = -10;
+}
+
+message BaseRequest{
+
+}
+
+message BaseResponse{
+    required int32 ErrCode = 1;
+    optional string ErrMsg = 2;
+}
+
+message BasePush{
+
+}
+
+enum EmAuthMethod{
+    EAM_md5 = 1;
+    EAM_macNoEncrypt = 2;
+}
+
+message AuthRequest{
+    required BaseRequest BaseRequest = 1;
+    optional bytes Md5DeviceTypeAndDeviceId = 2;
+    required int32 ProtoVersion = 3;
+    required int32 AuthProto = 4;
+    required EmAuthMethod AuthMethod = 5;
+    optional bytes AesSign = 6;
+    optional bytes MacAddress = 7;
+    optional string TimeZone = 10;
+    optional string Language = 11;
+    optional string DeviceName = 12;
+}
+
+message AuthResponse{
+
+    required BaseResponse BaseResponse = 1;
+    required bytes AesSessionKey = 2;
+
+}
+
+enum EmInitRespFieldFilter {
+    EIRFF_userNickName = 0x1;
+    EIRFF_platformType = 0x2;
+    EIRFF_model = 0x4;
+    EIRFF_os = 0x8;
+    EIRFF_time = 0x10;
+    EIRFF_timeZone = 0x20;
+    EIRFF_timeString = 0x40;
+}
+
+enum EmInitScence{
+    EIS_deviceChat = 1;
+    EIS_autoSync = 2;
+}
+
+message InitRequest{
+    required BaseRequest BaseRequest = 1;
+    optional bytes RespFieldFilter = 2;
+    optional bytes Challenge = 3;
+}
+
+enum EmPlatformType{
+    EPT_ios = 1;
+    EPT_android = 2;
+    EPT_wp = 3;
+    EPT_s60v3 = 4;
+    EPT_s60v5 = 5;
+    EPT_s40 = 6;
+    EPT_bb = 7;
+}
+
+message InitReponse{
+    required BaseResponse BaseResponse = 1;
+    required uint32 UserIdHigh = 2;
+    required uint32 UserIdLow = 3;
+    optional uint32 ChalleangeAnswer = 4;
+    optional EmInitScence InitScence = 5;
+    optional uint32 AutoSyncMaxDurationSecond = 6;
+    optional string UserNickName = 11;
+    optional EmPlatformType PlatformType = 12;
+    optional string Model = 13;
+    optional string Os = 14;
+    optional int32 Time = 15;
+    optional int32 TimeZone = 16;
+    optional string TimeString = 17;
+}
+
+enum EmDeviceDataType{
+    EDDT_manufatureSvr = 0;
+    EDDT_wxWristBand = 1;
+    EDDT_wxDeviceHtmlChatView = 10001;
+}
+
+message SendDataRequest{
+    required BaseRequest BaseRequest = 1;
+    required bytes Data = 2;
+    optional EmDeviceDataType type = 3;
+}
+
+message SendDateResponse{
+    required BaseResponse BaseResponse = 1;
+    optional bytes Data = 2;
+}
+
+message RecvDataPush{
+    required BasePush BasePush = 1;
+    required bytes Data = 2;
+    optional EmDeviceDataType Type = 3;
+}
+
+enum EmSwitchViewOp{
+    ESVO_enter = 1;
+    ESVO_exit = 2;
+}
+
+enum EmViewId{
+    EVI_deviceChatView = 1;
+    EVI_deviceChatHtmlView = 2;
+}
+
+message SwitchViewPush{
+    required BasePush BasePush = 1;
+    required EmSwitchViewOp SwitchViewOp = 2;
+}
+
+enum EmSwitchBackgroundOp{
+    ESBO_enterBackground = 1;
+    ESBO_enterForground = 2;
+    ESBO_sleep = 3;
+}
+
+message SwitchBackfroundPush{
+    required BasePush BasePush = 1;
+    required EmSwitchBackgroundOp SwitchBackgroundOp = 2;
+}
