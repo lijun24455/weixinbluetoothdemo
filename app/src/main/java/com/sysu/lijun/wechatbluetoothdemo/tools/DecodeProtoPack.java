@@ -40,8 +40,9 @@ public class DecodeProtoPack {
     }
 
     public static byte[] getProtoPackBody(byte[] paramArrayOfByte){
-        byte[] body = new byte[paramArrayOfByte.length - 8];
-        System.arraycopy(paramArrayOfByte, 8, body, 0, paramArrayOfByte.length-8);
+
+        byte[] body = new byte[paramArrayOfByte.length - 14];
+        System.arraycopy(paramArrayOfByte, 12, body, 0, paramArrayOfByte.length-14);
 
         return body;
 

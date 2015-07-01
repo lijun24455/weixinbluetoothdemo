@@ -23,4 +23,20 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.google.protobuf:protobuf-java:3.0.0-alpha-3'
+    compile files('src/main/java/Libs/commons-beanutils-1.8.3.jar')
+    compile files('src/main/java/Libs/commons-beanutils-bean-collections-1.8.3.jar')
+    compile files('src/main/java/Libs/commons-beanutils-core-1.8.3.jar')
+    compile files('src/main/java/Libs/commons-codec-1.4.jar')
+    compile files('src/main/java/Libs/commons-collections-3.2.1.jar')
+    compile files('src/main/java/Libs/commons-lang-2.6.jar')
+    compile files('src/main/java/Libs/commons-logging-1.1.1.jar')
+    compile files('src/main/java/Libs/dom4j-1.6.1.jar')
+    compile files('src/main/java/Libs/ezmorph-1.0.6.jar')
+    compile files('src/main/java/Libs/httpclient-4.1.2.jar')
+    compile files('src/main/java/Libs/httpclient-cache-4.1.2.jar')
+    compile files('src/main/java/Libs/httpcore-4.1.2.jar')
+    compile files('src/main/java/Libs/httpmime-4.1.2.jar')
+    compile files('src/main/java/Libs/json-lib-2.4-jdk15.jar')
+    compile files('src/main/java/Libs/zxing-core-2.3.0.jar')
+    compile 'com.google.code.gson:gson:2.3.1'
 }

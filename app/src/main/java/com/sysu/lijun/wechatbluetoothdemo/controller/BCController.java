@@ -145,7 +145,7 @@ public class BCController {
             this.mBluetothAdapter = paraAdapter;
             this.mIsConnected = false;
             try {
-                tmp = mBluetothAdapter.listenUsingInsecureRfcommWithServiceRecord("Weixin",MY_UUID_INSECURE);
+                tmp = mBluetothAdapter.listenUsingRfcommWithServiceRecord("Weixin",MY_UUID_INSECURE);
             } catch (IOException e) {
                 e.printStackTrace();
             }

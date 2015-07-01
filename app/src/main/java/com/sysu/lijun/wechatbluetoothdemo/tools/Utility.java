@@ -3,6 +3,11 @@ package com.sysu.lijun.wechatbluetoothdemo.tools;
 /**
  * Created by lijun on 15/6/19.
  */
+
+import android.util.Log;
+
+import com.google.protobuf.ByteString;
+
 /**
  * 各基础类型与byte之间的转换
  * @author shanl
@@ -194,6 +199,75 @@ public class Utility {
         System.arraycopy(byte_1, 0, byte_3, 0, byte_1.length);
         System.arraycopy(byte_2, 0, byte_3, byte_1.length, byte_2.length);
         return byte_3;
+    }
+
+    public static String byte2String(byte[] paramArrayOfByte){
+        if ((paramArrayOfByte == null) || (paramArrayOfByte.length == 0)){
+            Log.e("Util", "Byte array is null or empty...");
+            return "";
+        }
+
+        StringBuilder localStringBuilder = new StringBuilder(paramArrayOfByte.length);
+
+        for (int i = 0; ; i++){
+            if (i >= paramArrayOfByte.length)
+                return localStringBuilder.toString();
+            localStringBuilder.append((char)paramArrayOfByte[i]);
+        }
+    }
+
+    public static String byteArray2HexString(byte[] paramArrayOfByte, int paramInt){
+        int i = paramInt;
+        StringBuilder localStringBuilder = new StringBuilder(paramInt);
+        if (paramArrayOfByte.length < paramInt){
+            i = paramArrayOfByte.length;
+        }
+        for (int j = 0; ;j++){
+            if (j >= i){
+                return localStringBuilder.toString();
+            }
+            Object[] arrayOfObject = new Object[1];
+
+            arrayOfObject[0] = Byte.valueOf(paramArrayOfByte[j]);
+
+            localStringBuilder.append(String.format("%02X", arrayOfObject));
+
+        }
+    }
+
+    public static String byteArray2String(byte[] paramArrayOfByte, int paramInt){
+        int i = paramInt;
+        StringBuilder localStringBuilder = new StringBuilder(paramInt);
+        if (paramArrayOfByte.length < paramInt){
+            i = paramArrayOfByte.length;
+        }
+        for (int j = 0; ;j++){
+            if (j >= i){
+                return localStringBuilder.toString();
+            }
+            Object[] arrayOfObject = new Object[1];
+
+            arrayOfObject[0] = Byte.valueOf(paramArrayOfByte[j]);
+
+            localStringBuilder.append(String.format("%02x", arrayOfObject));
+
+        }
+    }
+
+    public static String ByteString2HexString(ByteString paramByteString){
+        byte[] arrayOfByte = ByteString2byteArray(paramByteString);
+        if (arrayOfByte == null)
+            return null;
+        return byteArray2HexString(arrayOfByte, arrayOfByte.length);
+    }
+
+    private static byte[] ByteString2byteArray(ByteString paramByteString) {
+        int i = paramByteString.size();
+        if (i == 0)
+            return null;
+        byte[] arrayOfByte = new byte[i];
+        paramByteString.copyTo(arrayOfByte,0,0,i);
+        return arrayOfByte;
     }
 
 }

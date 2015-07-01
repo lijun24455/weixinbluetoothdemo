@@ -1,18 +1,28 @@
 package com.sysu.lijun.wechatbluetoothdemo.views;
 
 import android.app.Activity;
+import android.media.Image;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.protobuf.InvalidProtocolBufferException;
 import com.sysu.lijun.wechatbluetoothdemo.R;
 import com.sysu.lijun.wechatbluetoothdemo.controller.BCController;
+import com.sysu.lijun.wechatbluetoothdemo.json.UserInfo;
+import com.sysu.lijun.wechatbluetoothdemo.proto.LJDevice;
+import com.sysu.lijun.wechatbluetoothdemo.tools.DecodeProtoPack;
 import com.sysu.lijun.wechatbluetoothdemo.tools.MsgParam;
 import com.sysu.lijun.wechatbluetoothdemo.controller.BluetoothCallBack;
+import com.sysu.lijun.wechatbluetoothdemo.tools.Utility;
 
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import proto.MmBp;
 
@@ -20,9 +30,11 @@ import proto.MmBp;
 public class ListenActivity extends Activity {
 
     private TextView textViewInfo = null;
+    private ImageView imageViewUniqle = null;
 
     private BluetoothCallBack mBluetoothCallback = null;
     private BCController mBCController = null;
+
 
     private Handler mHandler = new Handler(){
         @Override
@@ -56,6 +68,8 @@ public class ListenActivity extends Activity {
                                 break;
                             }
                             mBCController.setState(BCController.STATE_INIT_RESP);
+                            mBluetoothCallback.onConnected();
+
                             break;
                         case MmBp.EmCmdId.ECI_push_recvData_VALUE:
 
@@ -74,8 +88,27 @@ public class ListenActivity extends Activity {
     };
 
     private void handle(Message msg) {
+        Object msgObj = msg.obj;
+        byte[] bodyContent = DecodeProtoPack.getProtoPackBody((byte[]) msgObj);
 
-        Log.i("BLUETOOTH", msg.toString());
+        String contentStr = Utility.byteArray2HexString(bodyContent,bodyContent.length);
+        Log.i("RECVDATA", "Utilty----->"+contentStr);
+        LJDevice ljDevice = LJDevice.parse(bodyContent);
+        String dataStr = ljDevice.body;
+
+        Log.i("RECV DATA:", dataStr);
+
+        updateUI(dataStr);
+    }
+
+    private void updateUI(String dataStr) {
+
+        Gson gson = new Gson();
+
+        UserInfo userInfo = gson.fromJson(dataStr, UserInfo.class);
+
+
+
 
     }
 
@@ -102,45 +135,10 @@ public class ListenActivity extends Activity {
     private void Initialize() {
 
         textViewInfo = (TextView) findViewById(R.id.tv_info);
+        imageViewUniqle = (ImageView) findViewById(R.id.img_uniqle);
 
-//        this.mHandler = new BCHandler(Looper.getMainLooper(), this);
         this.mBluetoothCallback = new BluetoothCallBack(this.mHandler);
         this.mBCController = BCController.getInstance(this, this.mBluetoothCallback);
     }
-
-//    private void sendMessage(int paramWhat, Object paramObject, int paramInt1, int paramInt2){
-//        this.mHandler.sendMessage(Message.obtain(this.mHandler, paramWhat, paramInt1, paramInt2));
-//    }
-
-//    public static class BCHandler extends Handler{
-//        private final WeakReference<ListenActivity> mWeakRef;
-//
-//        public BCHandler(Looper paramLooper, ListenActivity paramActivity){
-//            super();
-//            this.mWeakRef = new WeakReference<ListenActivity>(paramActivity);
-//        }
-//
-//        @Override
-//        public void handleMessage(Message msg) {
-//
-//            switch (msg.what){
-//                case MsgParam.MSG_WHAT_LISTENNING:
-//
-//                    break;
-//                case MsgParam.MSG_WHAT_AUTH:
-//                    break;
-//                case MsgParam.MSG_WHAT_INIT:
-//                    break;
-//                case MsgParam.MSG_WHAT_CONNECTED:
-//                    break;
-//                case MsgParam.MSG_WHAT_RECV_DATA:
-//                    break;
-//                default:
-//                    break;
-//
-//            }
-//
-//        }
-//    }
 
 }

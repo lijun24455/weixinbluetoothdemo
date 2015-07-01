@@ -44,12 +44,12 @@ public class BluetoothCallBack {
     public void handle(byte[] arrayOfByte) {
         byte[] message = new byte[arrayOfByte.length];
         System.arraycopy(arrayOfByte, 0, message, 0, arrayOfByte.length);
-        byte[] messageBody = DecodeProtoPack.getProtoPackBody(message);
+//        byte[] messageBody = DecodeProtoPack.getProtoPackBody(message);
         int mCmdId = DecodeProtoPack.getCmdId(message);
         int mSeqId = DecodeProtoPack.getSeqId(message);
         Log.i("HANDLE","收到信息:"+mCmdId);
 
-        sendMessage(MsgParam.MSG_WHAT_RECV_DATA, messageBody, mCmdId, mSeqId);
+        sendMessage(MsgParam.MSG_WHAT_RECV_DATA, message, mCmdId, mSeqId);
 //        this.mHandler.obtainMessage(MsgParam.MSG_WHAT_RECV_DATA, mCmdId, mSeqId, arrayOfByte).sendToTarget();
     }
 }
