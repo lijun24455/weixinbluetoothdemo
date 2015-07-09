@@ -1,5 +1,7 @@
 package com.sysu.lijun.wechatbluetoothdemo.tools;
 
+import android.util.Log;
+
 /**
  * Created by lijun on 15/6/19.
  */
@@ -41,9 +43,13 @@ public class DecodeProtoPack {
 
     public static byte[] getProtoPackBody(byte[] paramArrayOfByte){
 
-        byte[] body = new byte[paramArrayOfByte.length - 14];
-        System.arraycopy(paramArrayOfByte, 12, body, 0, paramArrayOfByte.length-14);
-
+        //14 = 12 + 2;
+        String byteHexStr = Utility.byteArray2HexString(paramArrayOfByte, paramArrayOfByte.length);
+        int frontFix = byteHexStr.indexOf("FECF")/2;
+        int allFix = frontFix + 2;
+        Log.i("GETBODY","--------->allFix:"+allFix);
+        byte[] body = new byte[paramArrayOfByte.length - allFix];
+        System.arraycopy(paramArrayOfByte, frontFix, body, 0, paramArrayOfByte.length-allFix);
         return body;
 
     }

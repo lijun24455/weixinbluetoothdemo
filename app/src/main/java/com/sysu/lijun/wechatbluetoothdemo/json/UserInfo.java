@@ -1,54 +1,74 @@
 package com.sysu.lijun.wechatbluetoothdemo.json;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.List;
+
 /**
  * Created by lijun on 15/7/1.
  */
-public class UserInfo {
+public class UserInfo implements Parcelable{
 
-    public String getName() {
-        return name;
+    private String CustomerID;
+
+    private String CustomerPoint;
+
+    private List<LoginHistory> LoginHistorys ;
+
+    private List<OrderList> OrderLists ;
+
+    private List<ShipList> ShipLists ;
+
+    public void setCustomerID(String CustomerID){
+        this.CustomerID = CustomerID;
     }
-
-    public void setName(String name) {
-        this.name = name;
+    public String getCustomerID(){
+        return this.CustomerID;
     }
-
-    public String getTime() {
-        return time;
+    public void setCustomerPoint(String CustomerPoint){
+        this.CustomerPoint = CustomerPoint;
     }
-
-    public void setTime(String time) {
-        this.time = time;
+    public String getCustomerPoint(){
+        return this.CustomerPoint;
     }
-
-    public String getStore() {
-        return store;
+    public void setLoginHistory(List<LoginHistory> LoginHistory){
+        this.LoginHistorys = LoginHistory;
     }
-
-    public void setStore(String store) {
-        this.store = store;
+    public List<LoginHistory> getLoginHistory(){
+        return this.LoginHistorys;
     }
-
-    public String getScore() {
-        return score;
+    public void setOrderList(List<OrderList> OrderList){
+        this.OrderLists = OrderList;
     }
-
-    public void setScore(String score) {
-        this.score = score;
+    public List<OrderList> getOrderList(){
+        return this.OrderLists;
     }
-
-    private String name;
-    private String time;
-    private String store;
-    private String score;
+    public void setShipList(List<ShipList> ShipList){
+        this.ShipLists = ShipList;
+    }
+    public List<ShipList> getShipList(){
+        return this.ShipLists;
+    }
 
     @Override
     public String toString() {
         return "UserInfo{" +
-                "name='" + name + '\'' +
-                ", time='" + time + '\'' +
-                ", store='" + store + '\'' +
-                ", score='" + score + '\'' +
+                "CustomerID='" + CustomerID + '\'' +
+                ", CustomerPoint='" + CustomerPoint + '\'' +
+                ", LoginHistorys=" + LoginHistorys +
+                ", OrderLists=" + OrderLists +
+                ", ShipLists=" + ShipLists +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 }

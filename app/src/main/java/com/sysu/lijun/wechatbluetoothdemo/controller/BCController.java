@@ -78,6 +78,9 @@ public class BCController {
 
         final BluetoothManager bluetoothManager = (BluetoothManager)paraContext.getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoorhAdapter = bluetoothManager.getAdapter();
+        if (!mBluetoorhAdapter.enable()){
+            mBluetoorhAdapter.enable();
+        }
         this.mMacAddressByteSring = getBluetoothMacBytes(mBluetoorhAdapter.getAddress());
 
     }
@@ -273,6 +276,7 @@ public class BCController {
             }
         }
 
+
         @Override
         public void run() {
             byte[] buffer = new byte[2048];
@@ -291,7 +295,6 @@ public class BCController {
                     byte[] arrayOfByte = new byte[i];
                     System.arraycopy(buffer, 0, arrayOfByte, 0, i);
                     setDataRecSeq(getDataRecSeq()+1);
-
 
 //                    mHandler.obtainMessage(MESSAGE_READ, i, -1, arrayOfByte).sendToTarget();
                     mBluetoothCallback.handle(arrayOfByte);
@@ -341,10 +344,12 @@ public class BCController {
         if (this.mWorkThread == null){
             return false;
         }
-        if(this.mWorkThread.write(byteMerger(bPackHead, bPackBody))){
+//        while (this.getState() != STATE_AUTH_RESP){
+        if (this.mWorkThread.write(byteMerger(bPackHead, bPackBody))){
             this.setState(STATE_AUTH_REQ);
             return true;
         }
+
         return false;
     }
 
@@ -370,14 +375,22 @@ public class BCController {
         if (this.mWorkThread == null){
             return false;
         }
+
         if (this.mWorkThread.write(byteMerger(bPackHead, bPackBody))){
             this.setState(STATE_INIT_REQ);
             return true;
         }
+//
         return false;
     }
 
     public void out(String paraString){
         Log.i("BCController", paraString);
+    }
+
+    public void reset(){
+        mConnectThread.cancel();
+//        mWorkThread.cancel();
+//        mConnectThread.run();
     }
 }
