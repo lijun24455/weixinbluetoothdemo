@@ -11,7 +11,10 @@ import android.widget.TextView;
 
 import com.sysu.lijun.wechatbluetoothdemo.R;
 
-
+/**
+ * 二维码展示的页面
+ *
+ */
 public class FrontFragmet extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

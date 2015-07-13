@@ -3,6 +3,8 @@ package com.sysu.lijun.wechatbluetoothdemo.json;
 import java.util.List;
 
 /**
+ * 订单详情实体类
+ *
  * Created by lijun on 15/7/9.
  */
 public class OrderList {

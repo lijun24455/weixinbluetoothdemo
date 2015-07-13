@@ -1,6 +1,8 @@
 package com.sysu.lijun.wechatbluetoothdemo.json;
 
 /**
+ * 登录记录实体类
+ *
  * Created by lijun on 15/7/9.
  */
 public class LoginHistory {

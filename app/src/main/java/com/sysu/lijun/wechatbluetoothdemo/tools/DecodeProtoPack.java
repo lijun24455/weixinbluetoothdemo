@@ -3,6 +3,8 @@ package com.sysu.lijun.wechatbluetoothdemo.tools;
 import android.util.Log;
 
 /**
+ * 解码包体内容，包括从收到的byte[]中提取CmdID和信息长度等功能
+ *
  * Created by lijun on 15/6/19.
  */
 public class DecodeProtoPack {
@@ -41,6 +43,11 @@ public class DecodeProtoPack {
         return paramInt2;
     }
 
+    /**
+     * 获得包体数据段
+     * @param paramArrayOfByte 整个数据包
+     * @return
+     */
     public static byte[] getProtoPackBody(byte[] paramArrayOfByte){
 
         //14 = 12 + 2;

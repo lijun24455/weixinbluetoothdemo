@@ -1,14 +1,15 @@
 package com.sysu.lijun.wechatbluetoothdemo.json;
 
 /**
+ * 我的关注信息实体类
+ *
  * Created by lijun on 15/7/9.
  */
-public class ShipList {
+public class IntrestDetail {
     private String ProductID;
 
     private String UnitPrice;
 
-    private String Quantity;
 
     public void setProductID(String ProductID){
         this.ProductID = ProductID;
@@ -22,10 +23,5 @@ public class ShipList {
     public String getUnitPrice(){
         return this.UnitPrice;
     }
-    public void setQuantity(String Quantity){
-        this.Quantity = Quantity;
-    }
-    public String getQuantity(){
-        return this.Quantity;
-    }
+
 }

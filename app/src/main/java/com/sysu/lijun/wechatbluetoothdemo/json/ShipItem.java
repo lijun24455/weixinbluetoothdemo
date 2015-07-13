@@ -1,11 +1,11 @@
 package com.sysu.lijun.wechatbluetoothdemo.json;
 
 /**
- * 订单中的商品实体类
+ * 购物清单中的商品实体类
  *
  * Created by lijun on 15/7/9.
  */
-public class OrderDetail {
+public class ShipItem {
     private String ProductID;
 
     private String UnitPrice;

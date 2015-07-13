@@ -9,6 +9,9 @@ import com.sysu.lijun.wechatbluetoothdemo.tools.DecodeProtoPack;
 import com.sysu.lijun.wechatbluetoothdemo.tools.MsgParam;
 
 /**
+ * BluetoothAdapter在收发数据时候与主界面UI交互的回调；
+ * 持有与主界面绑定的Handler
+ *
  * Created by lijun on 15/6/27.
  */
 public class BluetoothCallBack {
@@ -52,4 +55,10 @@ public class BluetoothCallBack {
         sendMessage(MsgParam.MSG_WHAT_RECV_DATA, message, mCmdId, mSeqId);
 //        this.mHandler.obtainMessage(MsgParam.MSG_WHAT_RECV_DATA, mCmdId, mSeqId, arrayOfByte).sendToTarget();
     }
+
+    public void onReset(){
+        sendMessage(MsgParam.MSG_WHAT_RESET, null, 0, 0);
+    }
+
+
 }

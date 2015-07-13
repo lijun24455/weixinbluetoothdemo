@@ -3,6 +3,8 @@ package com.sysu.lijun.wechatbluetoothdemo.tools;
 import android.util.Log;
 
 /**
+ * 协议中的包结构实体类
+ *
  * Created by lijun on 15/6/19.
  */
 public class Package {
@@ -59,6 +61,9 @@ public class Package {
         return mPackageInstance;
     }
 
+    /**
+     * 包头
+     */
     private Package(){
         this.bMagicNum = 0xFE;
         this.bVer = 1;
