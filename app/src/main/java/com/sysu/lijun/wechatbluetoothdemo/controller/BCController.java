@@ -320,6 +320,11 @@ public class BCController {
 
         }
 
+        /**
+         * 此处接收信息可优化，经测试，当有大量的数据传来的时候，微信会将这些数据分批发送，但此处read只读了一次；
+         * 比如测试中发送来的3w多字节的的数据，这里分别收到了990长的byte[]若干组，
+         *
+         */
         @Override
         public void run() {
             mBluetoorhAdapter.cancelDiscovery();
@@ -342,10 +347,11 @@ public class BCController {
                     setDataRecSeq(getDataRecSeq()+1);
                     mBluetoothCallback.handle(arrayOfByte);
                 } catch (IOException e) {
-                    Log.e("IOEXinWorkThread", e.toString());
+                    Log.e("IOEWorkThreadIn", e.toString());
 //                    mBluetoothCallback.onReset();
 //                    cancel();
 //                    reset();
+//                    mBluetoothCallback.onReset();
                     break;
                 }
             }
@@ -360,9 +366,10 @@ public class BCController {
                 this.mOutputStream.write(paraArrayOfByte);
                 return true;
             } catch (IOException e) {
-                Log.e("IOEXinWorkThread", e.toString());
-//                mBluetoothCallback.onReset();
+                Log.e("IOEWorkThreadOut", e.toString());
 //                reset();
+//                mBluetoothCallback.onReset();
+
             }
             return false;
         }

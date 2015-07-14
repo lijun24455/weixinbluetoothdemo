@@ -220,6 +220,11 @@ public class ListenActivity extends Activity {
         return result;
     }
 
+    /**
+     * 处理消息的重要方法！
+     * BluetoothAdapter收到的自定义消息由这个方法来处理，Auth和Init阶段的回包不经过本方法处理。
+     * @param msg
+     */
     private void handle(Message msg) {
         Object msgObj = msg.obj;
 
@@ -233,11 +238,19 @@ public class ListenActivity extends Activity {
         LJDevice ljDevice = LJDevice.parse(bodyContent);
         String dataStr = ljDevice.body;
 
-        Log.i("RECV DATA:", dataStr);
+        Log.i("RECV DATA:", dataStr);//<-----------此处的dataStr就是服务器发来的自定义信息包体部分，也就是用户信息Json字符串【so important】
 
         updateUI(dataStr);
     }
 
+    /**
+     * 更新UI方法，这个方法写得很挫……
+     * GSON是将Json字符串解析为一个对象实体的神器，但不造为什么，对于一般String，int之类的属性都能解析出来，一遇到List<>就无能为力了；
+     * 如解析UserInfo的时候，UserInfo userInfo = gson.fromJson(dataStr, UserInfo.class);这样的道德userInfo里头凡是简单类型属性都有值，
+     * 就是List这种嵌套类型的属性是null；于是我就对每个嵌套类型如OrderList，ShipList等等又进行了单独的GSON解析，最后拼装成一个完整的UserInfo。
+     *
+     * @param dataStr
+     */
     private void updateUI(String dataStr) {
 
         Gson gson = new Gson();

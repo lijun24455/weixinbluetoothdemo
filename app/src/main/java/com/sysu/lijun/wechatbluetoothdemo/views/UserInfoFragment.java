@@ -95,7 +95,7 @@ public class UserInfoFragment extends Fragment {
         tvNickName.setText(mUserInfo.getCustomerNickName());
         tvUserPoint.setText(mUserInfo.getCustomerPoint());
 
-        initImg();
+//        initImg();
 
         lvLoginHistory.setAdapter(new LoginHistoryAdapter(getActivity().getApplicationContext(), mUserInfo.getLoginHistory()));
         lvShipList.setAdapter(new ShipItemAdapter(getActivity().getApplicationContext(), mUserInfo.getShipList()));
